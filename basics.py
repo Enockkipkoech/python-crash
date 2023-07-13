@@ -128,3 +128,53 @@ if car_age <= 20 or driver_experience == "strong":
   print("You can Drive")
 else:
   print("Can't Drive")
+
+
+# GETTING DATA
+import requests
+import json
+
+req = requests.get("https://api.poloniex.com/markets/price")
+json_obj = json.loads(req.text)
+print(json_obj[0])
+
+# Loop through data
+for day in json_obj:
+  print(json_obj[1])
+
+  # Many Requests  (API) 
+symbol = "BTC_ETH"
+req = requests.get("https://api.poloniex.com/markets/BTS_BTC/orderBook")
+json_obj = json.loads(req.text)
+print(json_obj["asks"])
+
+# Methods & Functions - Reusable Code
+
+import requests
+import json
+
+# method aka function
+def get_api_data(url):
+  req = requests.get(url)
+  if req.status_code == 200:
+    return json.loads(req.text)
+  else:
+    return 0  
+
+
+  # Reusing the method 
+poloniex_markets= get_api_data("https://api.poloniex.com/markets")
+print(poloniex_markets[0])
+
+poloniex_ticker24 = get_api_data("https://api.poloniex.com/markets/BTS_BTC/ticker24h")
+print(poloniex_ticker24)
+
+poloniex_orderBook = get_api_data("https://api.poloniex.com/markets/BTS_BTC/orderBook")
+print(poloniex_orderBook) 
+
+# more methods exapmles
+
+def multiply_by_number(num):
+  return num * 10
+
+multiply_by_number(10)
